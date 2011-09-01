@@ -1,6 +1,8 @@
 Skine::Application.routes.draw do
   root :to => 'pages#index'
 
+  match 'raw/*path(.:format)' => 'pages#show_raw'
+
   # Route glob to match pages inside our content repository
   match '*path(.:format)' => 'pages#show'
 
