@@ -36,8 +36,7 @@ class PagesController < ApplicationController
 
   def show_raw
     repo = Skine::Repo.new(App.repo)
-    blob = repo.find(params[:path])
-    blob = repo.find_fuzzy(params[:path]) unless blob
+    blob = repo.find(params[:path]) || repo.find_fuzzy(params[:path])
 
     # Comes back as nil for an invalid path
     raise ActiveRecord::RecordNotFound unless blob
