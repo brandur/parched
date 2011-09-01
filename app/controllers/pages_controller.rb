@@ -27,7 +27,7 @@ class PagesController < ApplicationController
     # If there's no template class available, just send the raw version
     send_blob(blob) && return unless klass
 
-    @content = klass.new{ blob.data }.render
+    @content = Skine::Page.new(repo, klass, blob.data).render
 
     last_commit = blob.last_commit
     @last_commit_author = last_commit.author
