@@ -1,5 +1,4 @@
 class PagesController < ApplicationController
-  before_filter :allow_only_html_requests
   caches_page :show, :show_raw
 
   def index
@@ -10,10 +9,18 @@ class PagesController < ApplicationController
     repo = Grit::Repo.new(App.repo)
     blob, path = find_blob(repo, params[:path])
 
+    # Exact match, send file as is
+    send_blob(blob) && return if blob
+
+    # No exact match, try to locate a file with this name and any extension, 
+    # which we will render and return to the user
+    blob, path = find_fuzzy_blob(repo, params[:path]) unless blob
+
     # Comes back as nil for an invalid path
     raise ActiveRecord::RecordNotFound unless blob
 
     # Tilt[] gets an appropriate template class given a file
+    # @todo: send raw if there's no available template
     klass = Tilt[blob.name] || Tilt::StringTemplate
     @content = klass.new{ blob.data }.render
 
@@ -34,24 +41,12 @@ class PagesController < ApplicationController
 
   private
 
-  # Restrict requests to only HTML to avoid Rails caching strange MIME types 
-  # that a user gets prompted to download. Side-effect is that files must be 
-  # accessed without their extension.
-  def allow_only_html_requests
-    if params[:format] && params[:format] != 'html'
-      raise ActiveRecord::RecordNotFound 
-    end
-  end
-
   def chomp_ext(file)
     file.chomp(File.extname(file))
   end
 
   def find_blob(repo, path)
     blob = repo.tree / path
-
-    # Try a fuzzy match (against any extension)
-    blob, path = find_fuzzy_blob(repo, path) unless blob
 
     return blob, path if blob && blob.class == Grit::Blob 
 
@@ -76,6 +71,21 @@ class PagesController < ApplicationController
         end
       end
     end
-    return blob, content_path
+
+    return blob, content_path if blob && blob.class == Grit::Blob 
+
+    # Don't allow access to a tree (directory)
+    return nil, nil
+  end
+
+  def lookup_mime_type(file)
+    Mime::Type.lookup_by_extension(File.extname(file)[1..-1])
+  end
+
+  def send_blob(blob)
+    opts = { :filename => blob.name, :disposition => 'inline' }
+    mime_type = lookup_mime_type(blob.name)
+    opts[:type] = mime_type if mime_type
+    send_data(blob.data, opts)
   end
 end

@@ -1,10 +1,10 @@
 Skine::Application.routes.draw do
   root :to => 'pages#index'
 
-  match 'raw/*path' => 'pages#show_raw'
+  match 'raw/*path' => 'pages#show_raw', :format => false
 
   # Route glob to match pages inside our content repository
-  match '*path' => 'pages#show'
+  match '*path' => 'pages#show', :format => false
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
