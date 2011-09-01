@@ -36,7 +36,6 @@ module Skine
     end
 
     def return_blob(blob, path)
-      Rails.logger.info "return path = " + path
       if blob && blob.class == Grit::Blob 
         Skine::Blob.new(blob, :path => path) 
       else
