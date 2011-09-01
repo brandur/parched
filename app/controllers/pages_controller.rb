@@ -1,4 +1,7 @@
 class PagesController < ApplicationController
+  before_filter :allow_only_html_requests
+  caches_page :show, :show_raw
+
   def index
     redirect_to '/index'
   end
@@ -30,6 +33,15 @@ class PagesController < ApplicationController
   end
 
   private
+
+  # Restrict requests to only HTML to avoid Rails caching strange MIME types 
+  # that a user gets prompted to download. Side-effect is that files must be 
+  # accessed without their extension.
+  def allow_only_html_requests
+    if params[:format] && params[:format] != 'html'
+      raise ActiveRecord::RecordNotFound 
+    end
+  end
 
   def chomp_ext(file)
     file.chomp(File.extname(file))
