@@ -2,7 +2,7 @@ require 'spec_helper'
 
 require 'skine'
 
-describe 'Skine::Page' do
+describe Skine::Page do
   before(:each) do
     @repo  = mock('repo')
   end
@@ -11,7 +11,7 @@ describe 'Skine::Page' do
     render('Hello, world!').should == 'Hello, world!'
   end
 
-  describe 'tags' do
+  describe Skine::Filters::TagFilter do
     include ActionView::Helpers::UrlHelper
 
     it 'should replace absent tags' do
