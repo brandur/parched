@@ -1,9 +1,9 @@
 @todo
 =====
 
-* Add Mathjax support
+* Get rid of MathJax loading popup
+* Headers
 * Default template
 * Customizable layout/CSS based on themes
 * In-wiki images?
-* Proper fenced code blocks w/ Redcarpet (language hinting)
 
