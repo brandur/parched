@@ -2,7 +2,6 @@
 =====
 
 * Add Mathjax support
-* Add code support
 * Default template
 * Customizable layout/CSS based on themes
 * In-wiki images?
