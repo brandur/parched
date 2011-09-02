@@ -1,4 +1,6 @@
+require 'skine/filters/code_filter'
 require 'skine/filters/tag_filter'
+require 'skine/filters/tex_filter'
 
 module Skine
   class Page
@@ -10,7 +12,9 @@ module Skine
       @repo    = repo
 
       @filters = [
-        Skine::Filters::TagFilter.new(self)
+        Skine::Filters::CodeFilter.new, 
+        Skine::Filters::TagFilter.new(self), 
+        Skine::Filters::TexFilter.new, 
       ].freeze
     end
 

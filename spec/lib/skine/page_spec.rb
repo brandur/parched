@@ -11,6 +11,30 @@ describe Skine::Page do
     render('Hello, world!').should == 'Hello, world!'
   end
 
+  #########################################################################
+  #
+  # Code
+  #
+  #########################################################################
+
+  describe Skine::Filters::CodeFilter do
+    it 'should render code without a language' do
+      render("```\nputs 'Hello, world!'\n```").should == 
+        %{<pre><code>puts 'Hello, world!'</code></pre>}
+    end
+
+    it 'should render code with a language' do
+      render("``` ruby\nputs 'Hello, world!'\n```").should == 
+        %{<pre><code class="language-ruby">puts 'Hello, world!'</code></pre>}
+    end
+  end
+
+  #########################################################################
+  #
+  # Tags
+  #
+  #########################################################################
+
   describe Skine::Filters::TagFilter do
     include ActionView::Helpers::UrlHelper
 
@@ -46,6 +70,22 @@ describe Skine::Page do
     it 'should allow tags with titled external links' do
       render('Here is [[http://rubyonrails.org|Ruby on Rails]].').should == 
         "Here is #{link_to 'Ruby on Rails', 'http://rubyonrails.org'}."
+    end
+  end
+
+  #########################################################################
+  #
+  # TeX
+  #
+  #########################################################################
+
+  describe Skine::Filters::TexFilter do
+    it 'should render TeX block syntax' do
+      render('a \[ a^2 \] b').should == 'a <script type="math/tex; mode=display">a^2</script> b'
+    end
+
+    it 'should render TeX inline syntax' do
+      render('a \( a^2 \) b').should == 'a <script type="math/tex">a^2</script> b'
     end
   end
 
