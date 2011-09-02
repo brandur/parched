@@ -8,7 +8,6 @@ class PagesController < ApplicationController
   end
 
   def show
-    repo = Skine::Repo.new(App.repo)
     blob = repo.find(params[:path])
 
     # Exact match, send file as is
@@ -36,13 +35,13 @@ class PagesController < ApplicationController
   end
 
   def show_raw
-    repo = Skine::Repo.new(App.repo)
     blob = repo.find(params[:path]) || repo.find_fuzzy(params[:path])
 
     # Comes back as nil for an invalid path
     raise ActiveRecord::RecordNotFound unless blob
 
     send_blob(blob)
+    head :ok
   end
 
   private
@@ -55,10 +54,15 @@ class PagesController < ApplicationController
     Mime::Type.lookup_by_extension(File.extname(file)[1..-1])
   end
 
+  def repo
+    @repo ||= Skine::Repo.new(App.repo)
+  end
+
   def send_blob(blob)
     opts = { :filename => blob.name, :disposition => 'inline' }
     mime_type = lookup_mime_type(blob.name)
     opts[:type] = mime_type if mime_type
     send_data(blob.data, opts)
+    true
   end
 end

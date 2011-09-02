@@ -18,10 +18,18 @@ RSpec.configure do |config|
   config.mock_with :rspec
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  #config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  #config.use_transactional_fixtures = true
+end
+
+# Alternate version of #mock that yields to a given block in which the newly 
+# created mock can be configured.
+def mockb(*args, &block)
+  obj = mock(args)
+  yield obj if block_given?
+  obj
 end
