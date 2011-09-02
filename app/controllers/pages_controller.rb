@@ -28,6 +28,7 @@ class PagesController < ApplicationController
     send_blob(blob) && return unless klass
 
     @content = Skine::Page.new(repo, klass, blob.data).render
+    @title = extract_header(@content)
 
     last_commit = blob.last_commit
     @last_commit_author = last_commit.author
@@ -45,6 +46,10 @@ class PagesController < ApplicationController
   end
 
   private
+
+  def extract_header(content)
+    /<h1>(.*?)<\/h1>/im =~ content ? $1.strip : nil
+  end
 
   def lookup_mime_type(file)
     Mime::Type.lookup_by_extension(File.extname(file)[1..-1])
