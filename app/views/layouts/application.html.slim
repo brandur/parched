@@ -4,6 +4,7 @@ html
     title= content_for?(:title) ? yield(:title) : App.name
     = stylesheet_link_tag 'application'
     = javascript_include_tag 'application'
+    = javascript_include_tag 'http://cdn.mathjax.org/mathjax/1.1-latest/MathJax.js?config=default'
     = csrf_meta_tags
     meta http-equiv='content-type' content='text/html; charset=UTF-8'
     link href='http://fonts.googleapis.com/css?family=Raleway:100|&amp;subset=latin' rel='stylesheet' type='text/css' 
