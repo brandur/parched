@@ -14,7 +14,7 @@ gem 'tilt'
 
 # Supported content formats through Tilt, see https://github.com/rtomayko/tilt
 gem 'redcarpet'
-gem 'RedCloth'
+#gem 'RedCloth' -- removed until deprecation warning is fixed
 gem 'wikicloth'
 
 # Gems used only for assets and not required
@@ -33,7 +33,8 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
-  gem 'ruby-debug19', :require => 'ruby-debug'
+  #gem 'ruby-debug19', :require => 'ruby-debug'
+  gem 'webrat'
 end
 
 group :test do

@@ -1,3 +1,10 @@
-== @content
-p
-  strong Commit #{@last_commit_sha[0...5]} by #{@last_commit_author}
+- if @content =~ /class\s*=\s*['"]row['"]/
+  == @content
+- else
+  .row
+    .col12
+      == @content
+.row
+  .col12
+    p
+      strong Commit #{@last_commit_sha[0...5]} by #{@last_commit_author}

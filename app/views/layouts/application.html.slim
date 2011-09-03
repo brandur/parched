@@ -21,6 +21,4 @@ html
     /[if lte IE 6]
       link rel='stylesheet' href='/columnal/ie6-984px.css' type='text/css' media='screen'
   body
-    .row
-      .col12
-        = content_for?(:content) ? yield(:content) : yield
+    = content_for?(:content) ? yield(:content) : yield
