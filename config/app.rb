@@ -7,6 +7,9 @@ class App < Configurable # :nodoc:
   # Location of the Git repository that contains content
   config.repo = 'content'
 
+  # Layout to use (allows the wiki to be themed)
+  config.layout = 'miniml'
+
   # Whether MathJax is sourced in to the wiki (fairly heavy JS/CSS/fonts that 
   # may slow down initial page load)
   config.enable_mathjax = true
