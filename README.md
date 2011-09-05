@@ -36,6 +36,20 @@ Now boot the application up on your favorite Rack server (mine is Phusion Passen
 Cache Expiry
 ------------
 
+Skine uses full page caching while in production to ensure that wiki resources can be accessed quickly and by a large number of visitors. Rails full page caching stores a rendered version of a page and allows the frontend web server to serve it without going through Rails at all. The downside is that these cached pages must be expired when a change is made to their source file.
+
+A few Rake tasks are provided to help with cache expiry when a backing repository gets new commits in production.
+
+Firstly, `rake expire` expires the cache for all files that were part of a single commit.
+
+    rake expire                    # Expire for the last commit (HEAD)
+    rake expire revision="HEAD^"   # Expire for the commit at HEAD - 1
+    rake expire revision="11be2a"  # Git-style partial match identifying a commit
+
+Another task is provided that will expire the cache for every file in the repository:
+
+    rake expire_all
+
 Usage
 -----
 
@@ -95,7 +109,7 @@ A language hint can also be provided:
 
 ### Mathematical Equations
 
-Typesetting for mathematical equations is provided by MathJax. A block style equation should be wrapped with `\[` nd `\]`:
+Typesetting for mathematical equations is provided by MathJax. A block style equation should be wrapped with `\[` and `\]`:
 
     \[ P(E) = {n \choose k} p^k (1-p)^{ n-k} \]
 
