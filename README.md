@@ -107,7 +107,10 @@ Note that math is **disabled by default** due to the heavy library dependencies.
 
 ### Escaping
 
-Links can be escaped by prefixing them with a single quote
+Links and partials will not be rendered if escaped by prefixing them with a single quote:
+
+    '[[languages/functional/haskell]]
+    '{{languages/functional/_index}}
 
 Customization
 -------------
