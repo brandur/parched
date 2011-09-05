@@ -12,6 +12,7 @@ module Skine
       @klass   = klass
       @repo    = repo
 
+      # Filter code was written with heavy inspiration from GitHub's Gollum
       @filters = [
         Skine::Filters::CodeFilter.new, 
         Skine::Filters::PartialFilter.new(self), 
