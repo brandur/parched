@@ -118,6 +118,11 @@ describe Skine::Page do
       render('Here is [[http://rubyonrails.org|Ruby on Rails]].').should == 
         "Here is #{link_to 'Ruby on Rails', 'http://rubyonrails.org'}."
     end
+
+    it 'should recognize an escaped tag control sequence' do
+      render("Here is '[[http://rubyonrails.org|Ruby on Rails]].").should == 
+        "Here is [[http://rubyonrails.org|Ruby on Rails]]."
+    end
   end
 
   #########################################################################
