@@ -6,7 +6,6 @@ task :expire => :environment do
 
   repo   = Grit::Repo.new(App.repo)
   commit = repo.commits(revision, 1).first
-  puts "count = #{repo.commits(revision).count}"
   next unless commit
 
   cache = Skine::Cache.new
