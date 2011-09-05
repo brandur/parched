@@ -12,5 +12,5 @@ class App < Configurable # :nodoc:
 
   # Whether MathJax is sourced in to the wiki (fairly heavy JS/CSS/fonts that 
   # may slow down initial page load)
-  config.enable_mathjax = true
+  config.enable_math = false
 end

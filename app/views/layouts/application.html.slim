@@ -6,7 +6,7 @@ html
     title= content_for?(:title) ? yield(:title) : @title ? @title : App.name
     = stylesheet_link_tag 'application'
     = javascript_include_tag 'application'
-    - if App.enable_mathjax
+    - if App.enable_math
       / Disable MathJax popups
       script type='text/x-mathjax-config'
         | MathJax.Hub.Config({

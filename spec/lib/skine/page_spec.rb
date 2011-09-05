@@ -132,12 +132,21 @@ describe Skine::Page do
   #########################################################################
 
   describe Skine::Filters::TexFilter do
+    before do
+      App.stub(:enable_math).and_return(true)
+    end
+
     it 'should render TeX block syntax' do
       render('a \[ a^2 \] b').should == 'a <script type="math/tex; mode=display">a^2</script> b'
     end
 
     it 'should render TeX inline syntax' do
       render('a \( a^2 \) b').should == 'a <script type="math/tex">a^2</script> b'
+    end
+
+    it 'should leave TeX alone when math is disabled' do
+      App.stub(:enable_math).and_return(false)
+      render('a \[ a^2 \] b').should == 'a [ a^2 ] b'
     end
   end
 

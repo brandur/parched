@@ -6,6 +6,8 @@ module Skine
       end
 
       def extract(data)
+        # Use <math> tag or another mechanism instead?
+        return data unless App.enable_math
         data.gsub(/\\\[\s*(.*?)\s*\\\]/m) do
           tag = CGI.escapeHTML($1)
           id  = Digest::SHA1.hexdigest(tag)
