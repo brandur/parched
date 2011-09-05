@@ -1,10 +1,12 @@
 require 'skine'
 
+desc 'Expire cache for all files included in a commit, use revision= (defaults to HEAD)'
 task :expire => :environment do
   revision = ENV['REVISION'] || ENV['revision'] || 'master'
 
   repo   = Grit::Repo.new(App.repo)
   commit = repo.commits(revision, 1).first
+  puts "count = #{repo.commits(revision).count}"
   next unless commit
 
   cache = Skine::Cache.new
@@ -16,6 +18,7 @@ task :expire => :environment do
   cache.put_expired_files
 end
 
+desc 'Expire cache for all files in the repository'
 task :expire_all => :environment do
   cache = Skine::Cache.new
   repo  = Grit::Repo.new(App.repo)
