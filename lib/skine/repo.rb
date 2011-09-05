@@ -1,5 +1,9 @@
 module Skine
   class Repo
+    def self.chomp_ext(file)
+      file.chomp(File.extname(file))
+    end
+
     def initialize(repo_path)
       @repo = Grit::Repo.new(repo_path)
     end
@@ -30,10 +34,6 @@ module Skine
     end
     
     private
-
-    def chomp_ext(file)
-      file.chomp(File.extname(file))
-    end
 
     def return_blob(blob, path)
       if blob && blob.class == Grit::Blob 
