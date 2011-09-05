@@ -63,6 +63,17 @@ describe Skine::Page do
       render('Here is a hello, world example in Ruby: {{my/_partial}}').should == 
         %{Here is a hello, world example in Ruby: <pre><code>puts 'Hello, world!'</code></pre>}
     end
+    
+    it 'should render placeholder text for a missing partial' do
+      @repo.should_receive(:find).once.with('my/_partial')
+      @repo.should_receive(:find_fuzzy).once.with('my/_partial')
+      render('Here is {{my/_partial}}.').should == 
+        %{Here is {{Partial not found: "my/_partial"}}.}
+    end
+
+    it 'should recognize an escaped partial control sequence' do
+      render("Here is '{{my/_partial}}.").should == "Here is {{my/_partial}}."
+    end
   end
 
   #########################################################################
