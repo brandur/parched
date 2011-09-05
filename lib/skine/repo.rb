@@ -24,7 +24,7 @@ module Skine
           else
             content.name
           end
-          if chomp_ext(content_path) == path
+          if self.class.chomp_ext(content_path) == path
             blob = content
             break
           end

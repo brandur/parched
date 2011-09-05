@@ -17,8 +17,8 @@ class PagesController < ApplicationController
     # which we will render and return to the user
     blob = repo.find_fuzzy(params[:path]) unless blob
 
-    # Comes back as nil for an invalid path
-    raise ActiveRecord::RecordNotFound unless blob
+    # Not found if the repository returned nil or if it's a partial
+    raise ActiveRecord::RecordNotFound if blob.nil? || blob.name =~ /^_/
 
     # Tilt[] gets an appropriate template class given a file
     klass = Tilt[blob.name]

@@ -31,6 +31,42 @@ describe Skine::Page do
 
   #########################################################################
   #
+  # Partials
+  #
+  #########################################################################
+
+  describe Skine::Filters::PartialFilter do
+    it 'should render partials' do
+      @repo.should_receive(:find).once.with('my/_partial').and_return mockb('my/_partial blob') { |blob|
+        blob.should_receive(:name).and_return('_partial')
+        blob.should_receive(:data).and_return('my partial')
+      }
+      render('Here is {{my/_partial}}.').should == 
+        "Here is my partial."
+    end
+
+    it 'should render partials that have a template' do
+      @repo.should_receive(:find).once.with('my/_partial')
+      @repo.should_receive(:find_fuzzy).once.with('my/_partial').and_return mockb('my/_partial.md blob') { |blob|
+        blob.should_receive(:name).and_return('_partial.md')
+        blob.should_receive(:data).and_return('My partial with **strong text**.')
+      }
+      render('Here is: {{my/_partial}}').should == 
+        "Here is: <p>My partial with <strong>strong text</strong>.</p>\n"
+    end
+
+    it 'should render other filters within partials' do
+      @repo.should_receive(:find).once.with('my/_partial').and_return mockb('my/_partial blob') { |blob|
+        blob.should_receive(:name).and_return('_partial')
+        blob.should_receive(:data).and_return("```\nputs 'Hello, world!'\n```")
+      }
+      render('Here is a hello, world example in Ruby: {{my/_partial}}').should == 
+        %{Here is a hello, world example in Ruby: <pre><code>puts 'Hello, world!'</code></pre>}
+    end
+  end
+
+  #########################################################################
+  #
   # Tags
   #
   #########################################################################

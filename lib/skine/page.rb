@@ -1,4 +1,5 @@
 require 'skine/filters/code_filter'
+require 'skine/filters/partial_filter'
 require 'skine/filters/tag_filter'
 require 'skine/filters/tex_filter'
 
@@ -13,6 +14,7 @@ module Skine
 
       @filters = [
         Skine::Filters::CodeFilter.new, 
+        Skine::Filters::PartialFilter.new(self), 
         Skine::Filters::TagFilter.new(self), 
         Skine::Filters::TexFilter.new, 
       ].freeze
@@ -21,7 +23,7 @@ module Skine
     def render
       data = @data
       @filters.each {|filter| data = filter.extract(data)}
-      data = @klass.new{data}.render
+      data = @klass ? @klass.new{data}.render : data
       @filters.each {|filter| data = filter.process(data)}
       data
     end

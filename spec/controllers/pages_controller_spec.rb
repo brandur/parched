@@ -16,7 +16,7 @@ describe PagesController do
     it 'renders a templated page (Markdown)' do
       Skine::Repo.any_instance.stub(:find).and_return(nil)
       Skine::Repo.any_instance.stub(:find_fuzzy).and_return mockb('my/git/page blob') { |blob|
-        blob.should_receive(:name).and_return('my/git/page.md')
+        blob.should_receive(:name).at_least(1).and_return('my/git/page.md')
         blob.should_receive(:data).and_return("Hello!\n======\n\nThis is markdown!")
         blob.should_receive(:last_commit).and_return mockb('last_commit') { |last_commit|
           last_commit.should_receive(:author).and_return('spartacus')
@@ -61,8 +61,16 @@ describe PagesController do
       Skine::Repo.any_instance.stub(:find).and_return(nil)
       Skine::Repo.any_instance.stub(:find_fuzzy).and_return(nil)
 
-      #get(:show, :path => 'my/git/page').should raise_error#_raise(ActiveRecord::RecordNotFound)
       expect{ get(:show, :path => 'my/git/page') }.should raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it 'sends a 404 for a partial' do
+      Skine::Repo.any_instance.stub(:find).and_return(nil)
+      Skine::Repo.any_instance.stub(:find_fuzzy).and_return mockb('my/_partial blob') { |blob|
+        blob.should_receive(:name).and_return('_partial')
+      }
+
+      expect{ get(:show, :path => 'my/_partial') }.should raise_error(ActiveRecord::RecordNotFound)
     end
 
   end
