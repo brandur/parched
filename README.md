@@ -8,6 +8,13 @@ Skine is a minimal wiki designed to be run from a backing Git repository. Skine'
 
 Skine supports some nice features like support for a huge variety of markup formats through Tilt, code highlighting, TeX rendering, in-wiki linking, and partial page inclusion. It's designed to be customizable without manipulating any core source files so that updates to the system are a simple `git pull` away.
 
+### Who Should Use Skine?
+
+A more fully featured wiki is probably a better option for most people in most cases. The remaining subset of people who Skine may be useful for are:
+
+* Those who know Rails well, and want to work with a Rails 3.1 project with minimal cruft and complete specs
+* Those looking for a very minimalist wiki solution and who have good familiarity deploying Rails apps
+
 Installation
 ------------
 
