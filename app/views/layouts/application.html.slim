@@ -6,12 +6,24 @@ html
     title= content_for?(:title) ? yield(:title) : @title ? @title : App.name
     = stylesheet_link_tag 'application'
     = javascript_include_tag 'application'
+    - if content_for?(:syntax_config)
+      = yield(:syntax_config)
+    - else
+      javascript:
+        $.SyntaxHighlighter.init({
+          'lineNumbers': false, 
+          'theme': '#{App.syntax_theme}', 
+          'wrapLines': true 
+        });
     - if App.enable_math
-      / Disable MathJax popups
-      script type='text/x-mathjax-config'
-        | MathJax.Hub.Config({
-        |   messageStyle: "none"
-        | });
+      - if content_for?(:math_config)
+        = yield(:math_config)
+      - else
+        / Disable MathJax popups
+        script type='text/x-mathjax-config'
+          | MathJax.Hub.Config({
+          |   messageStyle: "none"
+          | });
       = javascript_include_tag 'http://cdn.mathjax.org/mathjax/1.1-latest/MathJax.js?config=default'
     = csrf_meta_tags
     meta http-equiv='content-type' content='text/html; charset=UTF-8'
