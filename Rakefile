@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Skine::Application.load_tasks
+Parched::Application.load_tasks

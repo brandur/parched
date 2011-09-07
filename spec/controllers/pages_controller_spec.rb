@@ -14,8 +14,8 @@ describe PagesController do
   describe 'GET show' do
 
     it 'renders a templated page (Markdown)' do
-      Skine::Repo.any_instance.stub(:find).and_return(nil)
-      Skine::Repo.any_instance.stub(:find_fuzzy).and_return mockb('my/git/page blob') { |blob|
+      Parched::Repo.any_instance.stub(:find).and_return(nil)
+      Parched::Repo.any_instance.stub(:find_fuzzy).and_return mockb('my/git/page blob') { |blob|
         blob.should_receive(:name).at_least(1).and_return('my/git/page.md')
         blob.should_receive(:data).and_return("Hello!\n======\n\nThis is markdown!")
         blob.should_receive(:last_commit).and_return mockb('last_commit') { |last_commit|
@@ -33,7 +33,7 @@ describe PagesController do
     end
 
     it 'sends a file on an exact page match' do
-      Skine::Repo.any_instance.stub(:find).and_return mockb('paris.jpg') { |blob|
+      Parched::Repo.any_instance.stub(:find).and_return mockb('paris.jpg') { |blob|
         blob.should_receive(:name).at_least(1).and_return('paris.jpg')
         blob.should_receive(:data).at_least(1).and_return("\0")
       }
@@ -45,8 +45,8 @@ describe PagesController do
     end
 
     it 'sends a file on a non-template page' do
-      Skine::Repo.any_instance.stub(:find).and_return(nil)
-      Skine::Repo.any_instance.stub(:find_fuzzy).and_return mockb('my/git/page blob') { |blob|
+      Parched::Repo.any_instance.stub(:find).and_return(nil)
+      Parched::Repo.any_instance.stub(:find_fuzzy).and_return mockb('my/git/page blob') { |blob|
         blob.should_receive(:name).at_least(1).and_return('my/git/page.xyz')
         blob.should_receive(:data).at_least(1).and_return("\0")
       }
@@ -58,15 +58,15 @@ describe PagesController do
     end
 
     it 'sends a 404 for a path not in the repository' do
-      Skine::Repo.any_instance.stub(:find).and_return(nil)
-      Skine::Repo.any_instance.stub(:find_fuzzy).and_return(nil)
+      Parched::Repo.any_instance.stub(:find).and_return(nil)
+      Parched::Repo.any_instance.stub(:find_fuzzy).and_return(nil)
 
       expect{ get(:show, :path => 'my/git/page') }.should raise_error(ActiveRecord::RecordNotFound)
     end
 
     it 'sends a 404 for a partial' do
-      Skine::Repo.any_instance.stub(:find).and_return(nil)
-      Skine::Repo.any_instance.stub(:find_fuzzy).and_return mockb('my/_partial blob') { |blob|
+      Parched::Repo.any_instance.stub(:find).and_return(nil)
+      Parched::Repo.any_instance.stub(:find_fuzzy).and_return mockb('my/_partial blob') { |blob|
         blob.should_receive(:name).and_return('_partial')
       }
 
@@ -78,8 +78,8 @@ describe PagesController do
   describe 'GET show_raw' do
 
     it 'sends a file on a template page' do
-      Skine::Repo.any_instance.stub(:find).and_return(nil)
-      Skine::Repo.any_instance.stub(:find_fuzzy).and_return mockb('my/git/page blob') { |blob|
+      Parched::Repo.any_instance.stub(:find).and_return(nil)
+      Parched::Repo.any_instance.stub(:find_fuzzy).and_return mockb('my/git/page blob') { |blob|
         blob.should_receive(:name).at_least(1).and_return('my/git/page.md')
         blob.should_receive(:data).at_least(1).and_return("\0")
       }
@@ -91,8 +91,8 @@ describe PagesController do
     end
 
     it 'sends a file on a non-template page' do
-      Skine::Repo.any_instance.stub(:find).and_return(nil)
-      Skine::Repo.any_instance.stub(:find_fuzzy).and_return mockb('my/git/page blob') { |blob|
+      Parched::Repo.any_instance.stub(:find).and_return(nil)
+      Parched::Repo.any_instance.stub(:find_fuzzy).and_return mockb('my/git/page blob') { |blob|
         blob.should_receive(:name).at_least(1).and_return('my/git/page.xyz')
         blob.should_receive(:data).at_least(1).and_return("\0")
       }

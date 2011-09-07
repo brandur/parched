@@ -1,9 +1,9 @@
-require 'skine/filters/code_filter'
-require 'skine/filters/partial_filter'
-require 'skine/filters/tag_filter'
-require 'skine/filters/tex_filter'
+require 'parched/filters/code_filter'
+require 'parched/filters/partial_filter'
+require 'parched/filters/tag_filter'
+require 'parched/filters/tex_filter'
 
-module Skine
+module Parched
   class Page
     attr_reader :klass, :repo
 
@@ -14,10 +14,10 @@ module Skine
 
       # Filter code was written with heavy inspiration from GitHub's Gollum
       @filters = [
-        Skine::Filters::CodeFilter.new, 
-        Skine::Filters::PartialFilter.new(self), 
-        Skine::Filters::TagFilter.new(self), 
-        Skine::Filters::TexFilter.new, 
+        Parched::Filters::CodeFilter.new, 
+        Parched::Filters::PartialFilter.new(self), 
+        Parched::Filters::TagFilter.new(self), 
+        Parched::Filters::TexFilter.new, 
       ].freeze
     end
 

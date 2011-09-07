@@ -1,4 +1,4 @@
-module Skine
+module Parched
   class Repo
     def self.chomp_ext(file)
       file.chomp(File.extname(file))
@@ -37,7 +37,7 @@ module Skine
 
     def return_blob(blob, path)
       if blob && blob.class == Grit::Blob 
-        Skine::Blob.new(blob, :path => path) 
+        Parched::Blob.new(blob, :path => path) 
       else
         # Don't allow access to a tree (directory)
         nil

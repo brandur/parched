@@ -1,4 +1,4 @@
-module Skine
+module Parched
   module Filters
     class CodeFilter
       def initialize

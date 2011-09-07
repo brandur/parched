@@ -1,4 +1,4 @@
-module Skine
+module Parched
   class Blob < Grit::Blob
     attr_reader :path
 

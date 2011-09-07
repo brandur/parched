@@ -5,7 +5,7 @@ describe ApplicationHelper do
   describe 'partial_page' do
 
     it 'should render partials' do
-      Skine::Repo.any_instance.should_receive(:find).and_return mockb('my/_partial blob') { |blob|
+      Parched::Repo.any_instance.should_receive(:find).and_return mockb('my/_partial blob') { |blob|
         blob.should_receive(:name).and_return('my/_partial')
         blob.should_receive(:data).and_return('Hello from a partial!')
       }
@@ -14,8 +14,8 @@ describe ApplicationHelper do
     end
 
     it 'should render partials that have a template' do
-      Skine::Repo.any_instance.should_receive(:find)
-      Skine::Repo.any_instance.should_receive(:find_fuzzy).and_return mockb('my/_partial blob') { |blob|
+      Parched::Repo.any_instance.should_receive(:find)
+      Parched::Repo.any_instance.should_receive(:find_fuzzy).and_return mockb('my/_partial blob') { |blob|
         blob.should_receive(:name).and_return('my/_partial.md')
         blob.should_receive(:data).and_return('Hello from a partial!')
       }
@@ -24,8 +24,8 @@ describe ApplicationHelper do
     end
 
     it "should raise an error when given a partial that doesn't exist" do
-      Skine::Repo.any_instance.should_receive(:find)
-      Skine::Repo.any_instance.should_receive(:find_fuzzy)
+      Parched::Repo.any_instance.should_receive(:find)
+      Parched::Repo.any_instance.should_receive(:find_fuzzy)
 
       expect{ partial_page('my/_partial') }.should raise_error
     end

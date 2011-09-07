@@ -1,4 +1,4 @@
-require 'skine'
+require 'parched'
 
 class PagesController < ApplicationController
   caches_page :show, :show_raw
@@ -26,7 +26,7 @@ class PagesController < ApplicationController
     # If there's no template class available, just send the raw version
     send_blob(blob) && return unless klass
 
-    @content = Skine::Page.new(repo, klass, blob.data).render
+    @content = Parched::Page.new(repo, klass, blob.data).render
     @title = extract_header(@content)
 
     last_commit = blob.last_commit
@@ -55,7 +55,7 @@ class PagesController < ApplicationController
   end
 
   def repo
-    @repo ||= Skine::Repo.new(App.repo)
+    @repo ||= Parched::Repo.new(App.repo)
   end
 
   def send_blob(blob)

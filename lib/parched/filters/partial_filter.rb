@@ -1,6 +1,6 @@
 require 'digest/sha1'
 
-module Skine
+module Parched
   module Filters
     class PartialFilter
       def initialize(page)
@@ -29,7 +29,7 @@ module Skine
           out = if blob
             # Tilt[] gets an appropriate template class given a file
             klass = Tilt[blob.name]
-            Skine::Page.new(@page.repo, klass, blob.data).render
+            Parched::Page.new(@page.repo, klass, blob.data).render
           else
             %{{{Partial not found: "#{partial}"}}}
           end

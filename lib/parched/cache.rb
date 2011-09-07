@@ -1,4 +1,4 @@
-module Skine
+module Parched
   class Cache
     attr_reader :expired_files
 
@@ -7,7 +7,7 @@ module Skine
     end
 
     def expire_file(path)
-      path_without_ext = Skine::Repo.chomp_ext(path)
+      path_without_ext = Parched::Repo.chomp_ext(path)
       controller.expire_page '/' + path
       controller.expire_page '/' + path_without_ext
       expired_files.concat [path_without_ext, path]

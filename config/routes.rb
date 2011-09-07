@@ -1,4 +1,4 @@
-Skine::Application.routes.draw do
+Parched::Application.routes.draw do
   root :to => 'pages#index'
 
   match 'raw/*path' => 'pages#show_raw', :format => false

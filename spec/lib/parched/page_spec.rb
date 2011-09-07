@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-require 'skine'
+require 'parched'
 
-describe Skine::Page do
+describe Parched::Page do
   before(:each) do
     @repo  = mock('repo')
   end
@@ -17,7 +17,7 @@ describe Skine::Page do
   #
   #########################################################################
 
-  describe Skine::Filters::CodeFilter do
+  describe Parched::Filters::CodeFilter do
     it 'should render code without a language' do
       render("```\nputs 'Hello, world!'\n```").should == 
         %{<pre><code>puts 'Hello, world!'</code></pre>}
@@ -35,7 +35,7 @@ describe Skine::Page do
   #
   #########################################################################
 
-  describe Skine::Filters::PartialFilter do
+  describe Parched::Filters::PartialFilter do
     it 'should render partials' do
       @repo.should_receive(:find).once.with('my/_partial').and_return mockb('my/_partial blob') { |blob|
         blob.should_receive(:name).and_return('_partial')
@@ -82,7 +82,7 @@ describe Skine::Page do
   #
   #########################################################################
 
-  describe Skine::Filters::TagFilter do
+  describe Parched::Filters::TagFilter do
     include ActionView::Helpers::UrlHelper
 
     it 'should replace absent tags' do
@@ -131,7 +131,7 @@ describe Skine::Page do
   #
   #########################################################################
 
-  describe Skine::Filters::TexFilter do
+  describe Parched::Filters::TexFilter do
     before do
       App.stub(:enable_math).and_return(true)
     end
@@ -153,6 +153,6 @@ describe Skine::Page do
   # Shortcut for initialization and rendering
   def render(data, opts = {})
     opts = { :template_klass => Tilt::StringTemplate }.merge(opts)
-    Skine::Page.new(@repo, opts[:template_klass], data).render
+    Parched::Page.new(@repo, opts[:template_klass], data).render
   end
 end
