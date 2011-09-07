@@ -8,6 +8,5 @@
  *= require_self
  *= require reset/reset
  *= require columnal/columnal
- *= require jquery.syntaxhighlighter/sunburst
  *= require_tree . 
 */
